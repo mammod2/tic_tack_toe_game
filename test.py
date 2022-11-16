@@ -50,8 +50,9 @@ def checkWinner(board):
 def checkWin(): 
      if checkWinner(board): 
         print(f"{currentPlayer} has won the game !")
-        return True
+        return True 
 
+# check for win or tie again 
 def checkTie(board): 
     if '-' not in board: 
         global PlayGame
@@ -59,12 +60,6 @@ def checkTie(board):
         print('It is a tie')
         PlayGame = False
 
-def computer(board):
-    while currentPlayer == "O":
-        position = random.randint(0,8)
-        if board[position] == '-': 
-            board[position] = "O"
-            switchPlayer()
 
 # switch the player 
 def switchPlayer():
@@ -73,24 +68,48 @@ def switchPlayer():
         currentPlayer = "O"
     else: 
         currentPlayer = "X"
-# check for win or tie again 
 
+def computer(board):
+    while currentPlayer == "O":
+        position = random.randint(0,8)
+        if board[position] == '-': 
+            board[position] = "O"
+            switchPlayer()
 
 
 while PlayGame: 
     print_board(board)
     playerInput(board)
 
-    switchPlayer()
-    print(f"{currentPlayer} is playing")
-    if checkWin(): 
-        break
-    print("checked winner ")
-    checkTie(board)
-    print("checked Tie")
+    if currentPlayer == "X":
+        if checkWin(): 
+            print(f"{winner} has won the game !")
+            print_board(board)
+            break
+        if checkTie(board):
+            print_board(board) 
+            break 
+        else:switchPlayer()
+        
+        
     computer(board)
-    print("Computer is playing")
-    checkWin()
-    print("checking winner 2 ")
-    checkTie(board)
-    print("checking T 2 ")
+
+    if currentPlayer == "O":
+        print_board(board)
+        if checkWin(): 
+            print(f"{winner} has won the game !")
+            print_board(board)
+            break
+        if checkTie(board): 
+            print_board(board)
+            break 
+        else:switchPlayer()
+        
+    print(f"{currentPlayer} is playing")
+    
+    
+    # print("Computer is playing")
+    # checkWin()
+    # print("checking winner 2 ")
+    # checkTie(board)
+    # print("checking T 2 ")
