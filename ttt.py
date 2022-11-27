@@ -83,6 +83,7 @@ def computer_play(board):
     computer_log[1] = computer_log[1] + 1   
     game_list.append("C")
     game_list.append(computer_log)
+    # tesssssssssst
 
     return computer_move
 
