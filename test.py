@@ -1,10 +1,12 @@
 import random 
+import time 
 # things to do
 # make a board function to display the board
 board = ['-' , '-' , '-',  '-', '-', '-', '-', '-', '-' , ]
 currentPlayer = "X"
 winner = None
 PlayGame = True 
+answer = ''
 
 def print_board(board): 
      print(f'  {board[6]}   |   {board[7]}   |   {board[8]}' + '  ' ,10*' ',' ''  7   |   8   |   9')
@@ -47,12 +49,17 @@ def checkWinner(board):
     elif board[2] ==  board[4] == board[6] and board[2] != '-': #diagnal 357
         winner = board[6]
         return True 
+
 def checkWin(): 
      if checkWinner(board): 
         print(f"{currentPlayer} has won the game !")
-        return True 
+        return winner
 
-# check for win or tie again 
+def reset_the_game(board): 
+    for spot in board: 
+        spot.replace('-')
+
+# check for  tie 
 def checkTie(board): 
     if '-' not in board: 
         global PlayGame
@@ -77,21 +84,23 @@ def computer(board):
             switchPlayer()
 
 
+ 
 while PlayGame: 
     print_board(board)
     playerInput(board)
 
+    time.sleep(0.5)
     if currentPlayer == "X":
         if checkWin(): 
             print(f"{winner} has won the game !")
             print_board(board)
-            break
+            PlayGame = False
         if checkTie(board):
             print_board(board) 
-            break 
+            PlayGame = False
         else:switchPlayer()
         
-        
+    time.sleep(0.5)
     computer(board)
 
     if currentPlayer == "O":
@@ -99,14 +108,28 @@ while PlayGame:
         if checkWin(): 
             print(f"{winner} has won the game !")
             print_board(board)
-            break
+            PlayGame = False
         if checkTie(board): 
             print_board(board)
-            break 
+            PlayGame = False
         else:switchPlayer()
         
     print(f"{currentPlayer} is playing")
-    
+
+if PlayGame == False: 
+    answer = input("Do you want to play ? Y/N :")
+    print(type(answer))
+    print(answer)
+    if answer == "y": 
+
+        PlayGame = True
+        print("Logged it out ")
+    if answer == "n": 
+        print("Ok catch ya later aligator !")
+        
+    else: 
+        print("Invalid input, please try again")
+        answer = input("Do you want to play ? Y/N :")
     
     # print("Computer is playing")
     # checkWin()
